@@ -4,6 +4,22 @@ Full command reference for Backlog.md. For getting started, see [README.md](READ
 
 All examples use the `backlog` command, available after installing the `backlog.md` package globally (`npm i -g backlog.md`) or as a project dependency. For one-off runs without installing, use the full package name — `npx backlog.md <command>`, e.g. `npx backlog.md board`; without an install, `npx backlog` resolves to an unrelated third-party npm package, not this tool.
 
+## 日本語の読者へ
+
+この文書は Backlog.md の全コマンドのリファレンスです。初めて使う場合は、README の[「クイックスタート（日本語）」](README.md#クイックスタート日本語)から始めてください。以下の本文は英語ですが、各セクションはコマンド例の表が中心なので、下の目次から必要な箇所を探せます。
+
+すべての例は `backlog` コマンドを使います。`backlog.md` パッケージをグローバルにインストール（`npm i -g backlog.md`）するか、プロジェクトの依存関係として追加すると使えます。インストールせずに一度だけ実行する場合は、パッケージ名をフルで指定して `npx backlog.md <command>`（例: `npx backlog.md board`）としてください。インストールしていない状態では、`npx backlog` は無関係なサードパーティの npm パッケージに解決され、このツールではないので使わないでください。
+
+よく使うセクション:
+
+| セクション | 内容 |
+|------------|------|
+| [Project Setup](#project-setup) | `backlog init` によるプロジェクトの初期化と、`backlog config` による設定ウィザード |
+| [Task Management](#task-management) | `backlog task create` / `edit` / `list` など、タスクの作成・編集・一覧 |
+| [Board Operations](#board-operations) | `backlog board` によるターミナルのかんばんボード表示と、Markdown へのエクスポート |
+| [Web Interface](#web-interface) | `backlog browser` によるブラウザ UI の起動とポートの指定 |
+| [Search](#search) | `backlog search` によるタスク・ドキュメント・決定事項のあいまい検索 |
+
 ## Project Setup
 
 | Action      | Example                                              |
