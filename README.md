@@ -127,6 +127,58 @@ Everything is stored as human-readable Markdown in a project-local backlog folde
 
 ---
 
+## クイックスタート（日本語）
+
+英語話者以外の方向けに、最初の一歩を日本語でまとめました。手順とコマンドは、上の「Getting started」と下の「Working without AI agents」の各セクションと同じです。
+
+### 1. インストール
+
+```bash
+npm i -g backlog.md
+# または: bun add -g backlog.md
+# または: brew install backlog-md
+# または: nix run github:MrLesk/Backlog.md
+```
+
+### 2. プロジェクトを初期化する
+
+```bash
+# 任意の Git リポジトリで初期化する
+backlog init "My Awesome Project"
+
+# Git を使わずローカル専用で初期化する場合
+backlog init "Personal Planning" --no-git
+```
+
+初期化ウィザードで AI ツールとの連携方法を聞かれます。まずは **CLI instructions**（推奨）を選ぶか、**Skip** で AI 連携なしのタスク管理ツールとして使い始められます。
+
+### 3. タスクを作成する
+
+```bash
+backlog task create "Render markdown as kanban"
+backlog task edit BACK-1 -d "Detailed context" --ac "Clear acceptance criteria"
+backlog task list -s "To Do"
+```
+
+タスクは `backlog/` フォルダ配下に Markdown ファイルとして保存されます。ID の既定は `TASK-1` 形式ですが、このリポジトリでは接頭辞を `back` にしているため、例では `BACK-1` 形式になっています。
+
+### 4. ボードまたはブラウザで確認する
+
+```bash
+# ターミナルでかんばんボードを表示する
+backlog board
+
+# ブラウザで Web UI を開く
+backlog browser
+```
+
+> [!TIP]
+> **インストールせずに試したい場合**はパッケージ名をフルで指定します: `npx backlog.md init "My Project"`、`npx backlog.md board`。
+
+詳しくは [CLI リファレンス](CLI-INSTRUCTIONS.md)（英語）と [高度な設定](ADVANCED-CONFIG.md)（英語）を参照してください。
+
+---
+
 ## Working with AI agents
 
 This is the recommended flow for Claude Code, Codex, Gemini CLI, Kiro and similar tools, following the **spec‑driven AI development** approach.
