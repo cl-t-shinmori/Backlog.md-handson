@@ -1,6 +1,8 @@
 import React from 'react';
 import { BranchIndexingIndicator } from './BranchIndexingIndicator';
 import ThemeToggle from './ThemeToggle';
+import LanguageToggle from './LanguageToggle';
+import { useI18n } from '../contexts/I18nContext';
 
 interface NavigationProps {
     projectName: string;
@@ -8,12 +10,13 @@ interface NavigationProps {
 }
 
 const Navigation: React.FC<NavigationProps> = ({projectName, loadingMessage}) => {
+    const { t } = useI18n();
     return (
         <nav className="relative px-8 h-18 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 transition-colors duration-200">
             <div className="h-full flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                    <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">{projectName || 'Loading...'}</h1>
-                    <span className="text-sm text-gray-500 dark:text-gray-400">powered by</span>
+                    <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">{projectName || t('nav.loading')}</h1>
+                    <span className="text-sm text-gray-500 dark:text-gray-400">{t('nav.poweredBy')}</span>
                     <a
                         href="https://backlog.md"
                         target="_blank"
@@ -25,6 +28,7 @@ const Navigation: React.FC<NavigationProps> = ({projectName, loadingMessage}) =>
                 </div>
                 <div className="flex items-center gap-3">
                     <BranchIndexingIndicator message={loadingMessage} />
+                    <LanguageToggle />
                     <ThemeToggle />
                 </div>
             </div>

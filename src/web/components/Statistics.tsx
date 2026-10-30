@@ -5,6 +5,7 @@ import type { Task } from '../../types';
 import { formatPriorityLabel } from '../../utils/priority-config';
 import LoadingSpinner from './LoadingSpinner';
 import StoredDate from './StoredDate';
+import { useI18n } from '../contexts/I18nContext';
 
 interface StatisticsData extends Omit<TaskStatistics, 'statusCounts' | 'priorityCounts'> {
 	statusCounts: Record<string, number>;
@@ -26,6 +27,7 @@ const Statistics: React.FC<StatisticsProps> = ({
 	projectName,
 	dateFormat,
 }) => {
+	const { t } = useI18n();
 	const [statistics, setStatistics] = useState<StatisticsData | null>(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
@@ -253,10 +255,10 @@ const Statistics: React.FC<StatisticsProps> = ({
 			{/* Header */}
 			<div className="text-center">
 				<h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-					{projectName ? `${projectName} Statistics` : 'Project Statistics'}
+					{projectName ? t('statistics.titleFor', { project: projectName }) : t('statistics.title')}
 				</h1>
 				<p className="text-gray-600 dark:text-gray-400">
-					Overview of your project's task metrics and activity
+					{t('statistics.subtitle')}
 				</p>
 			</div>
 

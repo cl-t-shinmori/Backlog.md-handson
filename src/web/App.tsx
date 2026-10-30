@@ -14,6 +14,7 @@ import InitializationScreen from './components/InitializationScreen';
 import LoadingSpinner from './components/LoadingSpinner';
 import { SuccessToast } from './components/SuccessToast';
 import { ThemeProvider } from './contexts/ThemeContext';
+import { I18nProvider } from './contexts/I18nContext';
 import { TaskIdIndexProvider } from './contexts/TaskIdIndexContext';
 import {
 	type Decision,
@@ -1117,9 +1118,11 @@ function AppContent() {
 
 function App() {
   return (
-    <BrowserRouter>
-      <AppContent />
-    </BrowserRouter>
+    <I18nProvider>
+      <BrowserRouter>
+        <AppContent />
+      </BrowserRouter>
+    </I18nProvider>
   );
 }
 

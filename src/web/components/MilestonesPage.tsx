@@ -7,6 +7,7 @@ import { createTaskSearchIndex } from "../../utils/task-search";
 import MilestoneTaskRow from "./MilestoneTaskRow";
 import Modal from "./Modal";
 import StoredDate from "./StoredDate";
+import { useI18n } from "../contexts/I18nContext";
 
 type RemoveTaskHandling = "clear" | "reassign";
 
@@ -56,6 +57,7 @@ const MilestonesPage: React.FC<MilestonesPageProps> = ({
 	onRefreshData,
 	dateFormat,
 }) => {
+	const { t } = useI18n();
 	const [newMilestone, setNewMilestone] = useState("");
 	const [newMilestoneDueDate, setNewMilestoneDueDate] = useState("");
 	const [error, setError] = useState<string | null>(null);
@@ -762,7 +764,7 @@ const MilestonesPage: React.FC<MilestonesPageProps> = ({
 			{/* Header */}
 			<div className="flex flex-wrap items-center justify-between gap-4 mb-6">
 				<div className="flex flex-wrap items-center gap-4">
-					<h1 className="text-2xl font-bold text-gray-900 dark:text-white">Milestones</h1>
+					<h1 className="text-2xl font-bold text-gray-900 dark:text-white">{t('milestones.title')}</h1>
 					<div className="relative w-full min-w-[240px] max-w-[420px]">
 						<span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400 dark:text-gray-500">
 							<svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

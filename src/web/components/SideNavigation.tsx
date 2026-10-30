@@ -16,6 +16,7 @@ import { getWebVersion } from '../utils/version';
 import { apiClient } from '../lib/api';
 import { parseSearchCommandQuery } from '../utils/search-command-query';
 import { buildDocsTree, type DocsTreeNode } from '../lib/docs-tree';
+import { useI18n } from '../contexts/I18nContext';
 
 // Utility functions for ID transformations
 const stripIdPrefix = (id: string): string => {
@@ -271,6 +272,7 @@ const SideNavigation = memo(function SideNavigation({
 	error,
 	onRetry
 }: SideNavigationProps) {
+	const { t } = useI18n();
 	const [isCollapsed, setIsCollapsed] = useState(() => {
 		const saved = localStorage.getItem('sideNavCollapsed');
 		return saved ? JSON.parse(saved) : false;
@@ -488,7 +490,7 @@ const SideNavigation = memo(function SideNavigation({
 							<input
 								ref={setSearchInputRef}
 								type="text"
-								placeholder="Search (⌘K)..."
+								placeholder={t('sidebar.search.placeholder')}
 								value={searchQuery}
 								onChange={(e) => setSearchQuery(e.target.value)}
 								className="w-full pl-10 pr-8 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-sm text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-stone-500 dark:focus:ring-stone-400 focus:border-transparent transition-colors duration-200"
@@ -510,7 +512,7 @@ const SideNavigation = memo(function SideNavigation({
 							<button
 								onClick={expandAndFocusSearch}
 								className="flex items-center justify-center p-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200"
-								title="Search (⌘K)"
+								title={t('sidebar.search.title')}
 							>
 								<Icons.Search />
 						</button>
@@ -522,9 +524,9 @@ const SideNavigation = memo(function SideNavigation({
 			{!isCollapsed && searchQuery.trim() && unifiedSearchResults.length > 0 && (
 				<div className="p-4 border-b border-gray-200 dark:border-gray-700">
 					<div className="flex items-center justify-between mb-3">
-						<h3 className="text-sm font-medium text-gray-900 dark:text-gray-100">Search Results</h3>
+						<h3 className="text-sm font-medium text-gray-900 dark:text-gray-100">{t('sidebar.search.results')}</h3>
 						{isSearching && (
-							<span className="text-xs text-gray-500 dark:text-gray-400">Searching…</span>
+							<span className="text-xs text-gray-500 dark:text-gray-400">{t('sidebar.search.searching')}</span>
 						)}
 					</div>
 					<div className="space-y-1">
@@ -605,24 +607,24 @@ const SideNavigation = memo(function SideNavigation({
 							type="button"
 							onClick={onRetry}
 							className="flex w-full items-center justify-center rounded-md bg-red-50 p-3 font-bold text-red-600 hover:bg-red-100 dark:bg-red-900/20 dark:text-red-400 dark:hover:bg-red-900/30"
-							aria-label="Failed to load navigation. Retry"
-							title="Failed to load navigation. Retry"
+							aria-label={t('sidebar.error.failedRetry')}
+							title={t('sidebar.error.failedRetry')}
 						>
 							<span aria-hidden="true">!</span>
-							<span className="sr-only">Retry</span>
+							<span className="sr-only">{t('sidebar.error.retry')}</span>
 						</button>
 					</div>
 				)}
 				{error && !isCollapsed && (
 					<div className="px-4 py-4">
 						<div className="text-center p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-							<p className="text-sm text-red-700 dark:text-red-400 mb-2">Failed to load navigation</p>
+							<p className="text-sm text-red-700 dark:text-red-400 mb-2">{t('sidebar.error.failed')}</p>
 								{onRetry && (
 									<button
 										onClick={onRetry}
 										className="text-xs px-3 py-1 bg-red-600 dark:bg-red-700 text-white rounded hover:bg-red-700 dark:hover:bg-red-600 transition-colors duration-200"
 									>
-										Retry
+										{t('sidebar.error.retry')}
 									</button>
 							)}
 						</div>
@@ -635,7 +637,7 @@ const SideNavigation = memo(function SideNavigation({
 						<div className="flex items-center space-x-3 text-gray-700 dark:text-gray-300">
 							<span className="text-gray-500 dark:text-gray-400"><Icons.Tasks /></span>
 							<span className="text-sm font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-400 whitespace-nowrap">
-								Tasks (<NavigationCount count={taskCount} isLoading={isLoading} error={error} label="task" />)
+								{t('sidebar.tasks')} (<NavigationCount count={taskCount} isLoading={isLoading} error={error} label="task" />)
 							</span>
 						</div>
 						{isLoading && (
@@ -658,7 +660,7 @@ const SideNavigation = memo(function SideNavigation({
 							}
 						>
 							<Icons.Board />
-							<span className="ml-3 text-sm font-medium">Kanban Board</span>
+							<span className="ml-3 text-sm font-medium">{t('sidebar.kanban')}</span>
 						</NavLink>
 
 						{/* Tasks Navigation */}
@@ -673,7 +675,7 @@ const SideNavigation = memo(function SideNavigation({
 							}
 						>
 							<Icons.List />
-							<span className="ml-3 text-sm font-medium">All Tasks</span>
+							<span className="ml-3 text-sm font-medium">{t('sidebar.allTasks')}</span>
 						</NavLink>
 
 						{/* Milestones Navigation */}
@@ -688,7 +690,7 @@ const SideNavigation = memo(function SideNavigation({
 							}
 						>
 							<Icons.Milestone />
-							<span className="ml-3 text-sm font-medium">Milestones</span>
+							<span className="ml-3 text-sm font-medium">{t('sidebar.milestones')}</span>
 						</NavLink>
 
 						{/* Drafts Navigation */}
@@ -703,7 +705,7 @@ const SideNavigation = memo(function SideNavigation({
 							}
 						>
 							<Icons.Draft />
-							<span className="ml-3 text-sm font-medium">Drafts</span>
+							<span className="ml-3 text-sm font-medium">{t('sidebar.drafts')}</span>
 						</NavLink>
 
 						{/* Statistics Navigation */}
@@ -718,7 +720,7 @@ const SideNavigation = memo(function SideNavigation({
 							}
 						>
 							<Icons.Statistics />
-							<span className="ml-3 text-sm font-medium">Statistics</span>
+							<span className="ml-3 text-sm font-medium">{t('sidebar.statistics')}</span>
 						</NavLink>
 					</div>
 				)}
@@ -735,19 +737,19 @@ const SideNavigation = memo(function SideNavigation({
 										<button
 											onClick={() => setIsDocsCollapsed(!isDocsCollapsed)}
 											className="p-1 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 rounded transition-colors duration-200"
-											title={isDocsCollapsed ? "Expand documents" : "Collapse documents"}
+											title={isDocsCollapsed ? t('sidebar.documents.expand') : t('sidebar.documents.collapse')}
 										>
 											{isDocsCollapsed ? <Icons.ChevronRight /> : <Icons.ChevronDown />}
 									</button>
 									<span className="text-gray-500 dark:text-gray-400"><Icons.Document /></span>
 									<span className="text-sm font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-400 whitespace-nowrap">
-										Documents (<NavigationCount count={docs.length} isLoading={isLoading} error={error} label="document" />)
+										{t('sidebar.documents')} (<NavigationCount count={docs.length} isLoading={isLoading} error={error} label="document" />)
 									</span>
 								</div>
 									<button
 										onClick={handleCreateDocument}
 										className="p-1 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded transition-colors duration-200"
-										title="Create new document"
+										title={t('sidebar.documents.create')}
 									>
 										<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 										<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -762,9 +764,9 @@ const SideNavigation = memo(function SideNavigation({
 									{isLoading ? (
 										<LoadingPhase className="px-3 py-2 text-sm text-gray-500 dark:text-gray-400" />
 									) : error ? (
-										<p className="px-3 py-2 text-sm text-gray-500 dark:text-gray-400">Documents unavailable</p>
+										<p className="px-3 py-2 text-sm text-gray-500 dark:text-gray-400">{t('sidebar.documents.unavailable')}</p>
 									) : filteredDocs.length === 0 ? (
-										<p className="px-3 py-2 text-sm text-gray-500 dark:text-gray-400">No documents</p>
+										<p className="px-3 py-2 text-sm text-gray-500 dark:text-gray-400">{t('sidebar.documents.empty')}</p>
 									) : searchQuery.trim() ? (
 										// Search results stay flat, bypassing folder grouping
 										filteredDocs.map(doc => (
@@ -800,13 +802,13 @@ const SideNavigation = memo(function SideNavigation({
 										<button
 											onClick={() => setIsDecisionsCollapsed(!isDecisionsCollapsed)}
 											className="p-1 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 rounded transition-colors duration-200"
-											title={isDecisionsCollapsed ? "Expand decisions" : "Collapse decisions"}
+											title={isDecisionsCollapsed ? t('sidebar.decisions.expand') : t('sidebar.decisions.collapse')}
 										>
 											{isDecisionsCollapsed ? <Icons.ChevronRight /> : <Icons.ChevronDown />}
 									</button>
 									<span className="text-gray-500 dark:text-gray-400"><Icons.Decision /></span>
 									<span className="text-sm font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-400 whitespace-nowrap">
-										Decisions (<NavigationCount count={decisions.length} isLoading={isLoading} error={error} label="decision" />)
+										{t('sidebar.decisions')} (<NavigationCount count={decisions.length} isLoading={isLoading} error={error} label="decision" />)
 									</span>
 								</div>
 								{/* Temporarily hidden - decisions editing not ready */}
@@ -830,9 +832,9 @@ const SideNavigation = memo(function SideNavigation({
 									{isLoading ? (
 										<LoadingPhase className="px-3 py-2 text-sm text-gray-500 dark:text-gray-400" />
 									) : error ? (
-										<p className="px-3 py-2 text-sm text-gray-500 dark:text-gray-400">Decisions unavailable</p>
+										<p className="px-3 py-2 text-sm text-gray-500 dark:text-gray-400">{t('sidebar.decisions.unavailable')}</p>
 									) : filteredDecisions.length === 0 ? (
-										<p className="px-3 py-2 text-sm text-gray-500 dark:text-gray-400">No decisions</p>
+										<p className="px-3 py-2 text-sm text-gray-500 dark:text-gray-400">{t('sidebar.decisions.empty')}</p>
 									) : (
 										filteredDecisions.map((decision) => (
 											<NavLink
@@ -862,7 +864,7 @@ const SideNavigation = memo(function SideNavigation({
 						<NavLink
 							to="/board"
 							data-tooltip-id="sidebar-tooltip"
-							data-tooltip-content="Kanban Board"
+							data-tooltip-content={t('sidebar.kanban')}
 							className={({ isActive }) =>
 								`flex items-center justify-center p-3 rounded-md transition-colors duration-200 ${
 									isActive
@@ -878,7 +880,7 @@ const SideNavigation = memo(function SideNavigation({
 						<NavLink
 							to="/tasks"
 							data-tooltip-id="sidebar-tooltip"
-							data-tooltip-content="All Tasks"
+							data-tooltip-content={t('sidebar.allTasks')}
 							className={({ isActive }) =>
 								`flex items-center justify-center p-3 rounded-md transition-colors duration-200 ${
 									isActive
@@ -895,7 +897,7 @@ const SideNavigation = memo(function SideNavigation({
 						<NavLink
 							to="/drafts"
 							data-tooltip-id="sidebar-tooltip"
-							data-tooltip-content="Drafts"
+							data-tooltip-content={t('sidebar.drafts')}
 							className={({ isActive }) =>
 								`flex items-center justify-center p-3 rounded-md transition-colors duration-200 ${
 									isActive
@@ -912,7 +914,7 @@ const SideNavigation = memo(function SideNavigation({
 						<NavLink
 							to="/milestones"
 							data-tooltip-id="sidebar-tooltip"
-							data-tooltip-content="Milestones"
+							data-tooltip-content={t('sidebar.milestones')}
 							className={({ isActive }) =>
 								`flex items-center justify-center p-3 rounded-md transition-colors duration-200 ${
 									isActive
@@ -929,7 +931,7 @@ const SideNavigation = memo(function SideNavigation({
 						<NavLink
 							to="/statistics"
 							data-tooltip-id="sidebar-tooltip"
-							data-tooltip-content="Statistics"
+							data-tooltip-content={t('sidebar.statistics')}
 							className={({ isActive }) =>
 								`flex items-center justify-center p-3 rounded-md transition-colors duration-200 ${
 									isActive
@@ -948,7 +950,7 @@ const SideNavigation = memo(function SideNavigation({
 								setIsDocsCollapsed(false);
 							}}
 								data-tooltip-id="sidebar-tooltip"
-								data-tooltip-content="Documentation"
+								data-tooltip-content={t('sidebar.documentation')}
 								className={`flex items-center justify-center p-3 rounded-md transition-colors duration-200 w-full ${
 									location.pathname.startsWith('/documentation')
 										? 'bg-blue-50 dark:bg-blue-600/20 text-blue-700 dark:text-blue-400'
@@ -965,7 +967,7 @@ const SideNavigation = memo(function SideNavigation({
 								setIsDecisionsCollapsed(false);
 							}}
 								data-tooltip-id="sidebar-tooltip"
-								data-tooltip-content="Decisions"
+								data-tooltip-content={t('sidebar.decisions')}
 								className={`flex items-center justify-center p-3 rounded-md transition-colors duration-200 w-full ${
 									location.pathname.startsWith('/decisions')
 										? 'bg-blue-50 dark:bg-blue-600/20 text-blue-700 dark:text-blue-400'
@@ -994,7 +996,7 @@ const SideNavigation = memo(function SideNavigation({
 						}
 					>
 						<Icons.DocumentSettings />
-						<span className="ml-3 text-sm font-medium">Settings</span>
+						<span className="ml-3 text-sm font-medium">{t('sidebar.settings')}</span>
 						{version && (
 							<span className="ml-auto text-xs text-gray-500 dark:text-gray-400">Backlog.md - v{version}</span>
 						)}
@@ -1003,7 +1005,7 @@ const SideNavigation = memo(function SideNavigation({
 					<NavLink
 						to="/settings"
 						data-tooltip-id="sidebar-tooltip"
-						data-tooltip-content="Settings"
+						data-tooltip-content={t('sidebar.settings')}
 						className={({ isActive }) =>
 							`flex items-center justify-center p-3 rounded-md transition-colors duration-200 ${
 								isActive

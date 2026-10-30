@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { apiClient } from '../lib/api';
 import { SuccessToast } from './SuccessToast';
 import type { BacklogConfig } from '../../types';
+import { useI18n } from '../contexts/I18nContext';
 
 const Settings: React.FC = () => {
+	const { t } = useI18n();
 	const [config, setConfig] = useState<BacklogConfig | null>(null);
 	const [originalConfig, setOriginalConfig] = useState<BacklogConfig | null>(null);
 	const [loading, setLoading] = useState(true);
@@ -135,7 +137,7 @@ const Settings: React.FC = () => {
 	return (
 		<div className="page-shell transition-colors duration-200">
 			<div className="max-w-4xl mx-auto">
-				<h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-8">Settings</h1>
+				<h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-8">{t('settings.title')}</h1>
 
 				{error && (
 					<div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg">
@@ -315,7 +317,7 @@ const Settings: React.FC = () => {
 
 					{/* Web UI Settings */}
 					<div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-						<h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Web UI Settings</h2>
+						<h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">{t('settings.webUi')}</h2>
 						<div className="space-y-4">
 							<div>
 								<label htmlFor="defaultPort" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
